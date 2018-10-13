@@ -33,8 +33,9 @@ class Simulation(object):
     mortality_rate: Float between 0 and 1.  This will be passed
     to the Virus object upon instantiation.
 
-    basic_repro_num: Float between 0 and 1.   This will be passed
+    contagiousness: Float between 0 and 1.   This will be passed
     to the Virus object upon instantiation.
+    Note from Ali: in our simulation, this will be known as contagiousness
 
     vacc_percentage: Float between 0 and 1.  Represents the total percentage of population
         vaccinated for the given simulation.
@@ -72,7 +73,7 @@ class Simulation(object):
     '''
 
     def __init__(self, population_size, vacc_percentage, virus_name,
-                 mortality_rate, basic_repro_num, initial_infected=1):
+                 mortality_rate, contagiousness, initial_infected=1):
         self.population_size = population_size
         self.population = []
         self.total_infected = 0
@@ -80,7 +81,7 @@ class Simulation(object):
         self.next_person_id = 0
         self.virus_name = virus_name
         self.mortality_rate = mortality_rate
-        self.basic_repro_num = basic_repro_num
+        self.contagiousness = contagiousness
         self.file_name = "{}_simulation_pop_{}_vp_{}_infected_{}.txt".format(
             virus_name, population_size, vacc_percentage, initial_infected)
 
@@ -108,18 +109,22 @@ class Simulation(object):
         # people vaccinated, correct number of initially infected people).
         population = []
         infected_count = 0
-        while len(population) != pop_size:
-            if infected_count != initial_infected:
+        while len(population) <= pop_size:
+            if infected_count < initial_infected:
                 # TODO: Create all the infected people first, and then worry about the rest.
                 # Don't forget to increment infected_count every time you create a
                 # new infected person!
-                pass
+                person = Person(self, self.next_person_id, self.virus_name)
+                infected_count += 1
+                next_person_id += 1
             else:
                 # Now create all the rest of the people.
                 # Every time a new person will be created, generate a random number between
                 # 0 and 1.  If this number is smaller than vacc_percentage, this person
                 # should be created as a vaccinated person. If not, the person should be
                 # created as an unvaccinated person.
+                person = Person(self, self.next_person_id)
+                next_person_id += 1
                 pass
             # TODO: After any Person object is created, whether sick or healthy,
             # you will need to increment self.next_person_id by 1. Each Person object's
@@ -133,7 +138,12 @@ class Simulation(object):
         #     - The entire population is dead.
         #     - There are no infected people left in the population.
         # In all other instances, the simulation should continue.
-        pass
+        if self.population == 0:
+            return False
+        elif self.infected_count == 0:
+            return False
+        else:
+            return True
 
     def run(self):
         # TODO: Finish this method.  This method should run the simulation until

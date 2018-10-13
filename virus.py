@@ -25,4 +25,12 @@ class Virus(object):
         self.mortality_rate = mortality_rate
         self.contagiousness = contagiousness
 
-    def test_was_virus_created(self)
+
+def test_was_virus_created():
+    virus = Virus("HIV", 0.8, 3.5)
+    print(virus.name)
+    print(virus.mortality_rate)
+    print(virus.contagiousness)
+
+
+# test_was_virus_created()

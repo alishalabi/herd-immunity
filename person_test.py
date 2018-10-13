@@ -1,27 +1,26 @@
 import unittest
 # import virus.py
 # Still need to install
-
-from person import person
+import person
 
 
 class PersonTest(unittest.TestCase):
     def test_is_alive_and_is_vaccinated(self):
-        testPerson = Person()
-        testPerson.is_vaccinated = True
-        assert testPerson.is_vaccinated = True
-        assert testPerson.is_alive = True
+        testPerson = person.Person(1, True)
+        assert testPerson.is_vaccinated == True
+        assert testPerson.is_alive == True
 
     def test_is_alive_and_is_not_vaccinated(self):
-        testPerson = Person()
-        testPerson.is_vaccinated = False
-        assert testPerson.is_vaccinated = False
-        assert testPerson.is_alive = True
+        testPerson = person.Person(1, False)
+        assert testPerson.is_vaccinated == False
+        assert testPerson.is_alive == True
 
-    def test_did_survive_infection(self):
-        testPerson = Person()
-        testPerson.is_vaccinated = True
-        testPerson(did_survive_infection)
-        pass
+    def test_died_from_infection(self):
+        testPerson = person.Person(1, False, 1.1)
+        testPerson.did_survive_infection()
+        assert testPerson.is_alive == False
 
-# (self, _id, is_vaccinated, infected=None)
+    def test_did_not_die_from_infection(self):
+        testPerson = person.Person(1, False, 0)
+        testPerson.did_survive_infection()
+        assert testPerson.is_alive == True
