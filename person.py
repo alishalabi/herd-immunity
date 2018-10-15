@@ -51,13 +51,13 @@ class Person(object):
         self.is_alive = True
         self.infection = infection
 
-    def did_survive_infection(self):
+    def did_survive_infection(self, contagiousness):
         # TODO:  Finish this method. Follow the instructions in the class documentation
         # for resolve_infection.  If person dies, set is_alive to False and return False.
         # If person lives, set is_vaccinated = True, infected = None, return True.
         random_number = random.random()
         if self.infection != None:
-            if random_number < self.infection:
+            if random_number < contagiousness:
                 self.is_alive = False
                 return False
             else:
