@@ -1,4 +1,3 @@
-import random
 import sys
 random.seed(42)
 from person import Person
@@ -92,14 +91,10 @@ class Simulation(object):
         self.alive_population = population_size
         self.dead_population = 0
 
-        print("Debug 1")
-
         # TODO: Create a Logger object and bind it to self.logger.  You should use this
         # logger object to log all events of any importance during the simulation.  Don't forget
         # to call these logger methods in the corresponding parts of the simulation!
-        self.logger = None
-
-        print("Debug 1")
+        logger = Logger("a")  # Inputing file name
 
         # This attribute will be used to keep track of all the people that catch
         # the infection during a given time step. We'll store each newly infected
@@ -110,7 +105,8 @@ class Simulation(object):
         # TODO: Call self._create_population() and pass in the correct parameters.
         # Store the array that this method will return in the self.population attribute.
         self._create_population(initial_infected)
-        print("Debug 1")
+        logger.write_metadata(self.population_size, self.vacc_percentage, self.virus_name, self.mortality_rate,
+                              self.contagiousness)
 
     def _create_population(self, initial_infected):
         # for i in len(self.population_size):
@@ -131,7 +127,7 @@ class Simulation(object):
                 infected_count += 1
                 self.next_person_id += 1
                 self.population.append(person)
-                print('infected person created' + str(self.next_person_id))
+                # print('infected person created' + str(self.next_person_id))
             else:
                 # Now create all the rest of the people.
                 # Every time a new person will be created, generate a random number between
@@ -143,13 +139,13 @@ class Simulation(object):
                     person = Person(self.next_person_id, True)
                     self.next_person_id += 1
                     self.population.append(person)
-                    print('healthy vaccinated person created' +
-                          str(self.next_person_id))
+                    # print('healthy vaccinated person created' +
+                    #       str(self.next_person_id))
                 else:
                     person = Person(self.next_person_id, False)
                     self.next_person_id += 1
                     self.population.append(person)
-                    print('healthy person created' + str(self.next_person_id))
+                    # print('healthy person created' + str(self.next_person_id))
             # TODO: After any Person object is created, whether sick or healthy,
             # you will need to increment self.next_person_id by 1. Each Person object's
             # ID has to be unique!
@@ -167,18 +163,18 @@ class Simulation(object):
         for person in self.population:
             if person.infection != None and person.is_alive is True:
                 self.current_infected += 1
-                print('person is vaccinated: ' + str(person.is_vaccinated))
-                print('person is alive: ' + str(person.is_alive))
-                print('person virus: ' + str(person.infection))
-
-        # From Nicolai for debugging
-        print('__________________________________________________')
-        print('total alive: {}'.format(self.alive_population))
-        print('total dead: {}'.format(self.dead_population))
-
-        print('current_infected: {}'.format(self.current_infected))
-        print('total_infected: {}'.format(self.total_infected))
-        print('__________________________________________________')
+        #         print('person is vaccinated: ' + str(person.is_vaccinated))
+        #         print('person is alive: ' + str(person.is_alive))
+        #         print('person virus: ' + str(person.infection))
+        #
+        # # From Nicolai for debugging
+        # print('__________________________________________________')
+        # print('total alive: {}'.format(self.alive_population))
+        # print('total dead: {}'.format(self.dead_population))
+        #
+        # print('current_infected: {}'.format(self.current_infected))
+        # print('total_infected: {}'.format(self.total_infected))
+        # print('__________________________________________________')
 
         if self.alive_population == 0:
             return False
@@ -210,8 +206,8 @@ class Simulation(object):
             self.time_step()
             time_step_counter += 1
             should_continue = self._simulation_should_continue()
-        print('The simulation has ended after {} turns.'.format(
-            time_step_counter))
+        # print('The simulation has ended after {} turns.'.format(
+        #     time_step_counter))
 
     # Helper function to grab random person and make sure they valid for an interaction
     def grab_random_person(self, infected_person):

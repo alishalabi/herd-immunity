@@ -67,10 +67,17 @@ class Logger(object):
         # since 'w' overwrites the file.
         # NOTE: Make sure to end every line with a '/n' character to ensure that each
         # event logged ends up on a separate line!
-        opening_line = (str(pop_size + vacc_percentage +
-                            virus_name + mortality_rate + contagiousness))
-        self.file.write(opening_line)
-        pass
+        opening_line = (str(pop_size) + str(vacc_percentage) + str(virus_name) + str(mortality_rate + str(contagiousness))
+
+        print(opening_line)
+
+        # file.write(
+        #     "{pop_size}\t{vacc_percentage}\t{virus_name}\t{mortality_rate}\t{contagiousness}")
+        # file.write(" population size : {pop_size}\n")
+        # file.write(" vaccination percentatge: {vacc_percentage}\n")
+        # file.write(" virus name: {virus_name}\n")
+        # file.write(" mortality rate: {mortality_rate}\n")
+        # file.write(" contagiousness: {contagiousness}")
 
     def log_interaction(self, person1, person2, did_infect=None,
                         person2_vacc=None, person2_sick=None):
@@ -85,10 +92,15 @@ class Logger(object):
         # all the possible edge cases!
         # NOTE: Make sure to end every line with a '/n' character to ensure that each
         # event logged ends up on a separate line!
-        statement_infects = "{person1.ID} infects {person2.ID}"
-        statement_vaccinated = "{person1.ID} didn't infect {person2.ID} because of vaccination"
-        statement_sick = "{person1.ID} didn't infect {person2.ID} because already sick"
-        pass
+        statement_infects="{person1.ID} infects {person2.ID}"
+        statement_vaccinated="{person1.ID} didn't infect {person2.ID} because of vaccination"
+        statement_sick="{person1.ID} didn't infect {person2.ID} because already sick"
+        if person2_vacc == True:
+            print(statement_vaccinated)
+        elif person2_sick == True:
+            print(statement_sick)
+        else:
+            print(statement_infects)
 
     def log_infection_survival(self, person, did_die_from_infection):
         # TODO: Finish this method.  The Simulation object should use this method to log
@@ -98,7 +110,10 @@ class Logger(object):
         # on the format of the log.
         # NOTE: Make sure to end every line with a '/n' character to ensure that each
         # event logged ends up on a separate line!
-        pass
+        if did_die_from_infection == True:
+            print("Person has died")
+        else:
+            print("Person has survived")
 
     def log_time_step(self, time_step_number):
         # TODO: Finish this method.  This method should log when a time step ends, and a
@@ -109,4 +124,5 @@ class Logger(object):
         # to compute these statistics for you, as a Logger's job is just to write logs!
         # NOTE: Make sure to end every line with a '/n' character to ensure that each
         # event logged ends up on a separate line!
-        pass
+        if time_step_number < 0:
+            print("Current Generation: {time_step_number}")
