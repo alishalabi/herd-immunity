@@ -85,7 +85,9 @@ class Logger(object):
         # all the possible edge cases!
         # NOTE: Make sure to end every line with a '/n' character to ensure that each
         # event logged ends up on a separate line!
-
+        statement_infects = "{person1.ID} infects {person2.ID}"
+        statement_vaccinated = "{person1.ID} didn't infect {person2.ID} because of vaccination"
+        statement_sick = "{person1.ID} didn't infect {person2.ID} because already sick"
         pass
 
     def log_infection_survival(self, person, did_die_from_infection):
